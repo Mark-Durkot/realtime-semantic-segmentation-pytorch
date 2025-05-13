@@ -18,6 +18,9 @@ def get_dataset(config):
 def get_loader(config, rank, pin_memory=True):
     train_dataset, val_dataset = get_dataset(config)
 
+    config.DDP = True
+    config.gpu_num = 4
+
     # Make sure train number is divisible by train batch size
     config.train_num = int(len(train_dataset) // config.train_bs * config.train_bs)
     config.val_num = len(val_dataset)
