@@ -22,6 +22,9 @@ def get_loader(config, rank, pin_memory=True):
     config.train_num = int(len(train_dataset) // config.train_bs * config.train_bs)
     config.val_num = len(val_dataset)
 
+    print(f"Train number: {config.train_num}")
+    print(f"Val number: {config.val_num}")
+
     if config.DDP:
         print("Using Distributed Data Parallel (DDP) training")
         from torch.utils.data.distributed import DistributedSampler
