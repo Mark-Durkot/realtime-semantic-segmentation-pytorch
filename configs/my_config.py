@@ -13,7 +13,7 @@ class MyConfig(BaseConfig):
         self.num_class = 6
 
         # Model
-        self.model = 'ppliteseg'
+        self.model = 'mininetv2'
 
         # Training
         self.total_epoch = 1000
