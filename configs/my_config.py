@@ -22,6 +22,8 @@ class MyConfig(BaseConfig):
         self.optimizer_type = 'adam'
         self.logger_name = 'seg_trainer'
         self.use_aux = False
+        self.DDP = True
+        self.gpu_num = 4
 
         # Validating
         self.val_bs = 4
