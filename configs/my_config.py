@@ -9,7 +9,7 @@ class MyConfig(BaseConfig):
 
         # Dataset
         self.dataset = 'dubai'
-        self.dataroot = '/Users/md/realtime-semantic-segmentation-pytorch/dubai'
+        self.dataroot = 'dubai'
         self.num_class = 6
 
         # Model
