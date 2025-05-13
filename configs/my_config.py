@@ -17,7 +17,7 @@ class MyConfig(BaseConfig):
 
         # Training
         self.total_epoch = 200
-        self.train_bs = 4
+        self.train_bs = 8
         self.loss_type = 'ohem'
         self.optimizer_type = 'adam'
         self.logger_name = 'seg_trainer'
@@ -26,10 +26,10 @@ class MyConfig(BaseConfig):
         self.gpu_num = 4
 
         # Validating
-        self.val_bs = 4
+        self.val_bs = 8
 
         # Testing
-        self.test_bs = 4
+        self.test_bs = 8
         self.test_data_folder = '/path/to/your/test/folder'
         self.load_ckpt_path = '/path/to/your/inference/checkpoint'
         self.save_mask = True
