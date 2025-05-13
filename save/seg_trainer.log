@@ -1,0 +1,104 @@
+[2025-05-13 01:04] Using device: cpu
+[2025-05-13 01:05] [!] Train from scratch
+[2025-05-13 01:05] 
+
+
+######################### Config Informations #########################
+task: train
+dataset: dubai
+num_class: 6
+model: ppliteseg
+encoder: None
+decoder: None
+loss_type: ohem
+optimizer_type: adam
+lr_policy: cos_warmup
+total_epoch: 200
+train_bs: 4
+val_bs: 4
+train_num: 1304
+val_num: 1305
+gpu_num: 1
+num_workers: 2
+amp_training: False
+DDP: False
+kd_training: False
+synBN: True
+use_ema: False
+use_aux: False
+#######################################################################
+
+
+[2025-05-13 01:09] Using device: cpu
+[2025-05-13 01:09] [!] Train from scratch
+[2025-05-13 01:09] 
+
+
+######################### Config Informations #########################
+task: train
+dataset: dubai
+num_class: 6
+model: ppliteseg
+encoder: None
+decoder: None
+loss_type: ohem
+optimizer_type: adam
+lr_policy: cos_warmup
+total_epoch: 200
+train_bs: 4
+val_bs: 4
+train_num: 1304
+val_num: 1305
+gpu_num: 1
+num_workers: 2
+amp_training: False
+DDP: False
+kd_training: False
+synBN: True
+use_ema: False
+use_aux: False
+#######################################################################
+
+
+[2025-05-13 01:14]  Epoch0 mIoU: 0.3622    | best mIoU so far: 0.0000
+
+[2025-05-13 01:19]  Epoch1 mIoU: 0.4194    | best mIoU so far: 0.3622
+
+[2025-05-13 01:24]  Epoch2 mIoU: 0.4513    | best mIoU so far: 0.4194
+
+[2025-05-13 01:29]  Epoch3 mIoU: 0.4710    | best mIoU so far: 0.4513
+
+[2025-05-13 01:34]  Epoch4 mIoU: 0.3142    | best mIoU so far: 0.4710
+
+[2025-05-13 01:39]  Epoch5 mIoU: 0.4836    | best mIoU so far: 0.4710
+
+[2025-05-13 01:44]  Epoch6 mIoU: 0.4628    | best mIoU so far: 0.4836
+
+[2025-05-13 01:49]  Epoch7 mIoU: 0.4246    | best mIoU so far: 0.4836
+
+[2025-05-13 01:55]  Epoch8 mIoU: 0.4887    | best mIoU so far: 0.4836
+
+[2025-05-13 02:00]  Epoch9 mIoU: 0.4732    | best mIoU so far: 0.4887
+
+[2025-05-13 02:05]  Epoch10 mIoU: 0.4620    | best mIoU so far: 0.4887
+
+[2025-05-13 02:11]  Epoch11 mIoU: 0.4881    | best mIoU so far: 0.4887
+
+[2025-05-13 02:17]  Epoch12 mIoU: 0.4696    | best mIoU so far: 0.4887
+
+[2025-05-13 02:22]  Epoch13 mIoU: 0.4871    | best mIoU so far: 0.4887
+
+[2025-05-13 02:27]  Epoch14 mIoU: 0.5141    | best mIoU so far: 0.4887
+
+[2025-05-13 02:32]  Epoch15 mIoU: 0.5251    | best mIoU so far: 0.5141
+
+[2025-05-13 02:37]  Epoch16 mIoU: 0.5072    | best mIoU so far: 0.5251
+
+[2025-05-13 02:42]  Epoch17 mIoU: 0.5399    | best mIoU so far: 0.5251
+
+[2025-05-13 02:47]  Epoch18 mIoU: 0.5263    | best mIoU so far: 0.5399
+
+[2025-05-13 02:52]  Epoch19 mIoU: 0.5330    | best mIoU so far: 0.5399
+
+[2025-05-13 02:57]  Epoch20 mIoU: 0.5258    | best mIoU so far: 0.5399
+

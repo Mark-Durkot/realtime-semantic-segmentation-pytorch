@@ -1,0 +1,18 @@
+name: segmentation-env
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.10
+  - pytorch
+  - torchvision  # Often needed alongside torch
+  - albumentations
+  - torchmetrics
+  - loguru
+  - tqdm
+  - pip
+  - pip:
+    - segmentation-models-pytorch  # optional
+    - optuna==4.0.0                # optional
+    - optuna-integration==4.0.0    # optional
