@@ -16,7 +16,7 @@ class MyConfig(BaseConfig):
         self.model = 'ppliteseg'
 
         # Training
-        self.total_epoch = 200
+        self.total_epoch = 1000
         self.train_bs = 8
         self.loss_type = 'ohem'
         self.optimizer_type = 'adam'
