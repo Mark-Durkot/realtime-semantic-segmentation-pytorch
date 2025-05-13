@@ -1,15 +1,18 @@
 from core import SegTrainer
-from utils.config import get_config
+from configs import MyConfig, load_parser
 
 import warnings
 warnings.filterwarnings("ignore")
 
 
 if __name__ == '__main__':
-    # Get configuration with command line arguments
-    config = get_config()
+    config = MyConfig()
 
-    # Initialize trainer
+    config.init_dependent_config()
+
+    # If you want to use command-line arguments, please uncomment the following line
+    # config = load_parser(config)
+
     trainer = SegTrainer(config)
 
     if config.task == 'train':
