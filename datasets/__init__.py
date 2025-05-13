@@ -18,24 +18,30 @@ def get_dataset(config):
 def get_loader(config, rank, pin_memory=True):
     train_dataset, val_dataset = get_dataset(config)
 
-    # Make sure train number is divisible by batch size
-    print(f"Total number of training samples: {len(train_dataset)}")
-    config.train_num = len(train_dataset)
-    print(f"Train number: {config.train_num}")
-    print(f"Train batch size: {config.train_bs}")
-    if config.train_num % config.train_bs != 0:
-        config.train_num = (config.train_num // config.train_bs) * config.train_bs
+    # Make sure train number is divisible by train batch size
+    config.train_num = int(len(train_dataset) // config.train_bs * config.train_bs)
     config.val_num = len(val_dataset)
 
-    # For M1 Mac, we'll use single-GPU/CPU mode
-    config.DDP = False
-    config.gpu_num = 1
+    if config.DDP:
+        from torch.utils.data.distributed import DistributedSampler
+        train_sampler = DistributedSampler(train_dataset, num_replicas=config.gpu_num, 
+                                            rank=rank, shuffle=True)
+        val_sampler = DistributedSampler(val_dataset, num_replicas=config.gpu_num,
+                                            rank=rank, shuffle=False)
 
-    train_loader = DataLoader(train_dataset, batch_size=config.train_bs, 
-                                shuffle=True, num_workers=config.num_workers, drop_last=True)
+        train_loader = DataLoader(train_dataset, batch_size=config.train_bs, shuffle=False, 
+                                    num_workers=config.num_workers, pin_memory=pin_memory, 
+                                    sampler=train_sampler, drop_last=True)
 
-    val_loader = DataLoader(val_dataset, batch_size=config.val_bs, 
-                                shuffle=False, num_workers=config.num_workers)
+        val_loader = DataLoader(val_dataset, batch_size=config.val_bs, shuffle=False,
+                                    num_workers=config.num_workers, pin_memory=pin_memory,
+                                    sampler=val_sampler)
+    else:
+        train_loader = DataLoader(train_dataset, batch_size=config.train_bs, 
+                                    shuffle=True, num_workers=config.num_workers, drop_last=True)
+
+        val_loader = DataLoader(val_dataset, batch_size=config.val_bs, 
+                                    shuffle=False, num_workers=config.num_workers)
 
     return train_loader, val_loader
 
