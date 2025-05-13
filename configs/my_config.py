@@ -30,8 +30,8 @@ class MyConfig(BaseConfig):
 
         # Testing
         self.test_bs = 8
-        self.test_data_folder = '/path/to/your/test/folder'
-        self.load_ckpt_path = '/path/to/your/inference/checkpoint'
+        self.test_data_folder = '/dubai/test'
+        self.load_ckpt_path = '/dubai/checkpoints/ppliteseg_dubai_best.pth'
         self.save_mask = True
 
         # Training setting
@@ -49,7 +49,7 @@ class MyConfig(BaseConfig):
 
         # Knowledge Distillation
         self.kd_training = False
-        self.teacher_ckpt = '/path/to/your/teacher/checkpoint'
+        self.teacher_ckpt = '/dubai/checkpoints/smp_resnet101_deeplabv3p_dubai_best.pth'
         self.teacher_model = 'smp'
         self.teacher_encoder = 'resnet101'
         self.teacher_decoder = 'deeplabv3p'
