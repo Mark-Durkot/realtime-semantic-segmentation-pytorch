@@ -1,5 +1,6 @@
 import os
 import torch
+import argparse
 from utils.logger import get_logger
 
 def get_config():
@@ -62,5 +63,20 @@ def get_config():
             
             # Create save directory
             os.makedirs(self.save_dir, exist_ok=True)
-            
-    return Config() 
+
+    def parse_args():
+        parser = argparse.ArgumentParser(description='Semantic Segmentation Training')
+        parser.add_argument('--model', type=str, help='Model name to use (e.g., bisenetv2)')
+        return parser.parse_args()
+
+    # Create config instance
+    config = Config()
+    
+    # Parse command line arguments
+    args = parse_args()
+    
+    # Override config with command line arguments if provided
+    if args.model:
+        config.model = args.model
+    
+    return config 
