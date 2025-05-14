@@ -216,13 +216,8 @@ class Dubai(Dataset):
 
         # Convert RGB mask to label
         label_seg = np.zeros(mask.shape[:2], dtype=np.uint8)
-        for label in self.labels:
-            # Compare each channel separately and combine
-            mask_r = mask[:, :, 0] == label.color[0]
-            mask_g = mask[:, :, 1] == label.color[1]
-            mask_b = mask[:, :, 2] == label.color[2]
-            # Only set label where all channels match
-            label_seg[mask_r & mask_g & mask_b] = label.trainId
+        for i, label in enumerate(self.labels):
+            label_seg[np.all(mask == label.color, axis=-1)] = label.trainId
 
         # Perform augmentation and normalization
         augmented = self.transform(image=image, mask=label_seg)
