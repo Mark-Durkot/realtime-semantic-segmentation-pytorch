@@ -127,8 +127,8 @@ class Dubai(Dataset):
                 # Store patches
                 for i in range(patches_img.shape[0]):
                     for j in range(patches_img.shape[1]):
-                        img_patch = patches_img[i,j,:,:]
-                        mask_patch = patches_mask[i,j,:,:]
+                        img_patch = patches_img[i,j,0]  # Drop extra dim added by patchify
+                        mask_patch = patches_mask[i,j,0]
 
                         img_patch = scaler.fit_transform(img_patch.reshape(-1, img_patch.shape[-1])).reshape(img_patch.shape)
                         
