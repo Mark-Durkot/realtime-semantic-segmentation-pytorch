@@ -1,4 +1,5 @@
 import os
+import csv
 import torch
 from torch.cuda import amp
 from copy import deepcopy
@@ -84,13 +85,21 @@ class BaseTrainer:
             save_config(config)
             log_config(config, self.logger)
 
+        # Initialize CSV log file
+        csv_path = os.path.join(config.save_dir, 'training_log.csv')
+        if self.main_rank:
+            with open(csv_path, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(['epoch', 'loss', 'mIoU'])
+
         # Start training from the latest epoch or from scratch
         start_epoch = self.cur_epoch
         for cur_epoch in range(start_epoch, config.total_epoch):
             self.cur_epoch = cur_epoch
 
-            self.train_one_epoch(config)
+            avg_loss = self.train_one_epoch(config)
 
+            val_score = None
             if cur_epoch >= config.begin_val_epoch and cur_epoch % config.val_interval == 0:
                 val_score = self.validate(config)
 
@@ -100,9 +109,20 @@ class BaseTrainer:
                     if config.save_ckpt:
                         self.save_ckpt(config, save_best=True) 
 
+            # Log epoch metrics to CSV
+            if self.main_rank:
+                with open(csv_path, 'a', newline='') as f:
+                    writer = csv.writer(f)
+                    miou_val = f'{val_score:.4f}' if val_score is not None else ''
+                    writer.writerow([cur_epoch, f'{avg_loss:.4f}', miou_val])
+
             if self.main_rank and config.save_ckpt:
                 # Save last model    
                 self.save_ckpt(config)
+
+        # Save model after training even if save_ckpt was disabled
+        if self.main_rank and not config.save_ckpt:
+            self.save_ckpt(config)
 
         # Close tensorboard after training
         if config.use_tb and self.main_rank:

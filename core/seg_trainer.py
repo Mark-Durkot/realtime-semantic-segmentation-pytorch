@@ -37,6 +37,9 @@ class SegTrainer(BaseTrainer):
 
         pbar = tqdm(self.train_loader) if self.main_rank else self.train_loader
 
+        epoch_loss_sum = 0.0
+        epoch_loss_count = 0
+
         for cur_itrs, (images, masks) in enumerate(pbar):
             self.cur_itrs = cur_itrs
             self.train_itrs += 1
@@ -114,13 +117,17 @@ class SegTrainer(BaseTrainer):
 
             self.ema_model.update(self.model, self.train_itrs)
 
+            epoch_loss_sum += loss.detach().item()
+            epoch_loss_count += 1
+
             if self.main_rank:
                 pbar.set_description(('%s'*2) % 
                                 (f'Epoch:{self.cur_epoch}/{config.total_epoch}{" "*4}|',
                                 f'Loss:{loss.detach():4.4g}{" "*4}|',)
                                 )
 
-        return
+        avg_loss = epoch_loss_sum / max(epoch_loss_count, 1)
+        return avg_loss
 
     @torch.no_grad()
     def validate(self, config, val_best=False):
