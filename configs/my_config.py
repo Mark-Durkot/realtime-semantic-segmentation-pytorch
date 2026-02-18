@@ -17,8 +17,10 @@ class MyConfig(BaseConfig):
 
         # Training
         self.total_epoch = 200
+        self.base_lr = 1e-3
         self.train_bs = 8
         self.loss_type = 'ohem'
+        self.class_weights = [1.0, 1.0, 1.5, 1.0, 2.0, 0.0]
         self.optimizer_type = 'adam'
         self.logger_name = 'seg_trainer'
         self.use_aux = False
@@ -35,20 +37,21 @@ class MyConfig(BaseConfig):
         self.save_mask = True
 
         # Training setting
-        self.use_ema = False
+        self.use_ema = True
         self.base_workers = 2
 
         # Augmentation
-        self.crop_size = 512
-        self.randscale = [-0.5, 1.0]
+        self.crop_size = 256
+        self.randscale = [-0.25, 0.5]
         self.scale = 1.0
         self.brightness = 0.5
         self.contrast = 0.5
         self.saturation = 0.5
         self.h_flip = 0.5
+        self.v_flip = 0.5
 
         # Knowledge Distillation
-        self.kd_training = False
+        self.kd_training = True
         self.teacher_ckpt = '/dubai/checkpoints/smp_resnet101_deeplabv3p_dubai_best.pth'
         self.teacher_model = 'smp'
         self.teacher_encoder = 'resnet101'

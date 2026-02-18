@@ -53,6 +53,7 @@ class Dubai(Dataset):
                 AT.RandomCrop(height=config.crop_h, width=config.crop_w),
                 AT.ColorJitter(brightness=config.brightness, contrast=config.contrast, saturation=config.saturation),
                 AT.HorizontalFlip(p=config.h_flip),
+                AT.VerticalFlip(p=config.v_flip),
                 AT.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
                 ToTensorV2(),                
             ])

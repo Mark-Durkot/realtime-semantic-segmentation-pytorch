@@ -4,11 +4,11 @@ import torch.nn.functional as F
 
 
 class OhemCELoss(nn.Module):
-    def __init__(self, thresh, ignore_index=255):
+    def __init__(self, thresh, ignore_index=255, weight=None):
         super(OhemCELoss, self).__init__()
         self.thresh = -torch.log(torch.tensor(thresh, requires_grad=False, dtype=torch.float))
         self.ignore_index = ignore_index
-        self.criterion = nn.CrossEntropyLoss(ignore_index=ignore_index, reduction='none')
+        self.criterion = nn.CrossEntropyLoss(ignore_index=ignore_index, reduction='none', weight=weight)
 
     def forward(self, pred, target):
         n_min = target[target != self.ignore_index].numel() // 16
@@ -62,7 +62,7 @@ def get_loss_fn(config, device):
                                         reduction=config.reduction, weight=weights)
 
     elif config.loss_type == 'ohem':
-        criterion = OhemCELoss(thresh=config.ohem_thrs, ignore_index=config.ignore_index)  
+        criterion = OhemCELoss(thresh=config.ohem_thrs, ignore_index=config.ignore_index, weight=weights)  
 
     else:
         raise NotImplementedError(f"Unsupport loss type: {config.loss_type}")
