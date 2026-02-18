@@ -5,7 +5,7 @@ class MyConfig(BaseConfig):
     def __init__(self,):
         super().__init__()
         # Task
-        self.task = 'predict'
+        self.task = 'train'
 
         # Dataset
         self.dataset = 'dubai'
