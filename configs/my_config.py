@@ -51,7 +51,7 @@ class MyConfig(BaseConfig):
         self.v_flip = 0.5
 
         # Knowledge Distillation
-        self.kd_training = True
+        self.kd_training = False
         self.teacher_ckpt = '/dubai/checkpoints/smp_resnet101_deeplabv3p_dubai_best.pth'
         self.teacher_model = 'smp'
         self.teacher_encoder = 'resnet101'
