@@ -30,7 +30,7 @@ class MyConfig(BaseConfig):
 
         # Testing
         self.test_bs = 8
-        self.test_data_folder = '/dubai/test'
+        self.test_data_folder = '/dubai/Tile 8'
         self.load_ckpt_path = '/dubai/checkpoints/ppliteseg_dubai_best.pth'
         self.save_mask = True
 
