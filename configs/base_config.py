@@ -4,7 +4,7 @@ import os
 class BaseConfig:
     def __init__(self,):
         # Task
-        self.task = 'train' # train, val, predict
+        self.task = 'val' # train, val, predict
 
         # Dataset
         self.dataset = None
