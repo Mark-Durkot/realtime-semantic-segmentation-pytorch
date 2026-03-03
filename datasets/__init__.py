@@ -2,6 +2,7 @@ from torch.utils.data import DataLoader
 
 from .cityscapes import Cityscapes
 from .dubai import Dubai
+from .vdd import Vdd
 from .dataset_registry import dataset_hub
 
 
