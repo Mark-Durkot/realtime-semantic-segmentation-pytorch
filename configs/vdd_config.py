@@ -1,7 +1,7 @@
 from .base_config import BaseConfig
 
 
-class MyConfig(BaseConfig):
+class VDDConfig(BaseConfig):
     def __init__(self,):
         super().__init__()
         # Task
