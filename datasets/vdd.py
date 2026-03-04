@@ -26,12 +26,12 @@ class Vdd(Dataset):
 
     labels = [
         Label("other", 0, 0, "other", 0),
-        Label("wall", 1, 1, "wall", 38),
-        Label("road", 2, 2, "road", 75),
-        Label("vegetation", 3, 3, "vegetation", 113),
-        Label("vehicle", 4, 4, "vehicle", 150),
-        Label("roof", 5, 5, "roof", 188),
-        Label("water", 6, 6, "water", 225),
+        Label("wall", 1, 1, "wall", 1),
+        Label("road", 2, 2, "road", 2),
+        Label("vegetation", 3, 3, "vegetation", 3),
+        Label("vehicle", 4, 4, "vehicle", 4),
+        Label("roof", 5, 5, "roof", 5),
+        Label("water", 6, 6, "water", 6),
     ]
     color_to_train_id = {label.color: label.trainId for label in labels}
 
@@ -49,7 +49,7 @@ class Vdd(Dataset):
             raise RuntimeError(f"Mask directory: {msk_dir} does not exist.")
 
         if mode == "train":
-            # Dataset is relatively small (~280 images), so stronger spatial/color aug helps generalization.
+            # Dataset is relatively small (~280 images), so use spatial augmentation only.
             self.transform = AT.Compose(
                 [
                     transforms.Scale(scale=config.scale),
@@ -62,13 +62,13 @@ class Vdd(Dataset):
                     ),
                     AT.RandomCrop(height=config.crop_h, width=config.crop_w),
                     AT.HorizontalFlip(p=config.h_flip),
-                    AT.VerticalFlip(p=config.v_flip),
-                    AT.RandomRotate90(p=0.5),
-                    AT.ColorJitter(
-                        brightness=config.brightness,
-                        contrast=config.contrast,
-                        saturation=config.saturation,
-                    ),
+                    # AT.VerticalFlip(p=config.v_flip),
+                    # AT.RandomRotate90(p=0.5),
+                    # AT.ColorJitter(
+                    #     brightness=config.brightness,
+                    #     contrast=config.contrast,
+                    #     saturation=config.saturation,
+                    # ),
                     AT.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
                     ToTensorV2(),
                 ]
