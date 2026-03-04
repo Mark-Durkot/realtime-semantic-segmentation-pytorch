@@ -64,11 +64,11 @@ class Vdd(Dataset):
                     AT.HorizontalFlip(p=config.h_flip),
                     # AT.VerticalFlip(p=config.v_flip),
                     # AT.RandomRotate90(p=0.5),
-                    # AT.ColorJitter(
-                    #     brightness=config.brightness,
-                    #     contrast=config.contrast,
-                    #     saturation=config.saturation,
-                    # ),
+                    AT.ColorJitter(
+                        brightness=config.brightness,
+                        contrast=config.contrast,
+                        saturation=config.saturation,
+                    ),
                     AT.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
                     ToTensorV2(),
                 ]

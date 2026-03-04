@@ -16,7 +16,7 @@ class VDDConfig(BaseConfig):
         self.model = 'ppliteseg'
 
         # Training
-        self.total_epoch = 200
+        self.total_epoch = 260
         self.base_lr = 1e-3
         self.train_bs = 8
         self.loss_type = 'ohem'
@@ -33,7 +33,9 @@ class VDDConfig(BaseConfig):
         # Testing
         self.test_bs = 8
         self.test_data_folder = '/content/drive/MyDrive/VDD/test'
-        self.load_ckpt_path = '/content/drive/MyDrive/VDD/checkpoints/ppliteseg_vdd_best.pth'
+        self.load_ckpt = True
+        self.resume_training = True
+        self.load_ckpt_path = '/content/drive/MyDrive/realtime-semantic-segmentation-pytorch/save/best.pth'
         self.save_mask = True
 
         # Training setting
@@ -41,7 +43,7 @@ class VDDConfig(BaseConfig):
         self.base_workers = 2
 
         # Augmentation
-        self.crop_size = 256
+        self.crop_size = 512
         self.randscale = [-0.25, 0.5]
         self.scale = 1.0
         self.brightness = 0.5
