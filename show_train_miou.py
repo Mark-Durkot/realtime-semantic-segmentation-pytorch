@@ -6,7 +6,7 @@ print("Hello, World!")
 
 # Define the path to the csv file (place training_log.csv in this script's directory)
 script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, "training_log.csv")
+csv_path = os.path.join(script_dir, "training_log_2.csv")
 
 # Read the CSV file
 df = pd.read_csv(csv_path)
