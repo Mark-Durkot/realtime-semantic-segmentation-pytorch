@@ -16,7 +16,7 @@ class VDDConfig(BaseConfig):
         self.model = 'ppliteseg'
 
         # Training
-        self.total_epoch = 260
+        self.total_epoch = 150
         self.base_lr = 1e-3
         self.train_bs = 8
         self.loss_type = 'ohem'
