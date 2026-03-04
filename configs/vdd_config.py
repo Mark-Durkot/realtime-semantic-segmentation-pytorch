@@ -33,8 +33,8 @@ class VDDConfig(BaseConfig):
         # Testing
         self.test_bs = 8
         self.test_data_folder = '/content/drive/MyDrive/VDD/test'
-        self.load_ckpt = True
-        self.resume_training = True
+        self.load_ckpt = False
+        self.resume_training = False
         self.load_ckpt_path = '/content/drive/MyDrive/realtime-semantic-segmentation-pytorch/save/best.pth'
         self.save_mask = True
 
