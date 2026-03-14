@@ -1,12 +1,12 @@
 from core import SegTrainer
-from configs import VDDConfig, MyConfig, load_parser
+from configs import VDDConfig, MyConfig, load_parser, OptunaConfig
 
 import warnings
 warnings.filterwarnings("ignore")
 
 
 if __name__ == '__main__':
-    config = VDDConfig()
+    config = OptunaConfig()
 
     config.init_dependent_config()
 
