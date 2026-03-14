@@ -105,7 +105,7 @@ class Cityscapes(Dataset):
 
     def __init__(self, config, mode='train'):
         data_root = os.path.expanduser(config.data_root)
-        img_dir = os.path.join(data_root, 'leftImg8bit', mode)
+        img_dir = os.path.join(data_root, 'images', mode)
         msk_dir = os.path.join(data_root, 'gtFine', mode)
 
         if not os.path.isdir(img_dir):

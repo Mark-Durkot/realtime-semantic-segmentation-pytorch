@@ -13,11 +13,11 @@ class OptunaConfig(BaseConfig):
 
         # Dataset
         self.dataset = 'cityscapes'
-        self.data_root = '/path/to/your/dataset'
+        self.data_root = '/kaggle/input/cityscapes'
         self.num_class = 19
 
         # Model
-        self.model = 'bisenetv1'
+        self.model = 'ppliteseg'
 
         # Training
         self.total_epoch = 200
