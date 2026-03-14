@@ -28,7 +28,7 @@ class CityscapesConfig(BaseConfig):
         self.use_aux = False
         self.load_ckpt = False
         self.resume_training = False
-        self.save_dir = 'save_cityscapes'
+        self.save_dir = '/content/drive/MyDrive/Cityscapes/results/save'
 
         # Validating
         self.val_bs = 8
