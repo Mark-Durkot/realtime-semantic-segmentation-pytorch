@@ -13,7 +13,7 @@ class OptunaConfig(BaseConfig):
 
         # Dataset
         self.dataset = 'cityscapes'
-        self.data_root = '/kaggle/input/cityscapes'
+        self.data_root = '/root/.cache/kagglehub/datasets/xiaose/cityscapes/versions/1'
         self.num_class = 19
 
         # Model
