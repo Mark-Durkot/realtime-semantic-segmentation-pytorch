@@ -26,6 +26,9 @@ class CityscapesConfig(BaseConfig):
         self.optimizer_type = 'adam'
         self.logger_name = 'seg_trainer'
         self.use_aux = False
+        self.load_ckpt = False
+        self.resume_training = False
+        self.save_dir = 'save_cityscapes'
 
         # Validating
         self.val_bs = 8
