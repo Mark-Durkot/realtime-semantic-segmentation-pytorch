@@ -105,6 +105,10 @@ class Cityscapes(Dataset):
 
     def __init__(self, config, mode='train'):
         data_root = os.path.expanduser(config.data_root)
+
+        if not os.path.isdir(data_root):
+            raise RuntimeError(f'Data root directory: {data_root} does not exist.')
+
         img_dir = os.path.join(data_root, 'images', mode)
         msk_dir = os.path.join(data_root, 'gtFine', mode)
 
