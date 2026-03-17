@@ -90,8 +90,8 @@ class BaseConfig:
         self.v_flip = 0.0
 
         # DDP
-        self.synBN = True
-        self.destroy_ddp_process = True
+        self.synBN = False
+        self.destroy_ddp_process = False
 
         # Knowledge Distillation
         self.kd_training = False

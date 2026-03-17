@@ -9,8 +9,14 @@ def parse_args():
     parser.add_argument(
         "--file_name",
         type=str,
-        default="training_log_vvd_1.csv",
+        default="training_log_cityscapes_1.csv",
         help="CSV file name or absolute path.",
+    )
+    parser.add_argument(
+        "--dataset_name",
+        type=str,
+        default="cityscapes",
+        help="Dataset name.",
     )
     return parser.parse_args()
 
@@ -26,6 +32,7 @@ df = pd.read_csv(csv_path)
 
 # Plot Loss vs Epoch
 plt.figure(figsize=(12, 5))
+plt.suptitle(args.dataset_name, fontsize=14, fontweight='bold')
 
 plt.subplot(1, 2, 1)
 plt.plot(df['epoch'], df['loss'], color='b')
@@ -42,5 +49,5 @@ plt.xlabel('Epoch')
 plt.ylabel('mIoU')
 plt.grid(True)
 
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0, 1, 0.95])
 plt.show()
