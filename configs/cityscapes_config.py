@@ -43,9 +43,9 @@ class CityscapesConfig(BaseConfig):
 
         # Augmentation
         self.crop_size = 512
-        self.randscale = [-0.25, 0.5]
+        self.randscale = [0.0, 0.0]
         self.scale = 1.0
-        self.brightness = 0.5
-        self.contrast = 0.5
-        self.saturation = 0.5
-        self.h_flip = 0.5
+        self.brightness = 0.0
+        self.contrast = 0.0
+        self.saturation = 0.0
+        self.h_flip = 0.0
