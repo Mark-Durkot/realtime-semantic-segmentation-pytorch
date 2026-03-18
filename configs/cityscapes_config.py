@@ -21,10 +21,16 @@ class CityscapesConfig(BaseConfig):
 
         # Training
         self.total_epoch = 200
-        self.base_lr = 1e-3
-        self.train_bs = 8
+        self.max_iters = 160000
+        self.base_lr = 0.005
+        self.train_bs = 16
         self.loss_type = 'ohem'
-        self.optimizer_type = 'adam'
+        self.optimizer_type = 'sgd'
+        self.momentum = 0.9
+        self.weight_decay = 5e-4
+        self.lr_policy = 'poly'
+        self.poly_power = 0.9
+        self.warmup_epochs = 5
         self.logger_name = 'seg_trainer'
         self.use_aux = False
         self.load_ckpt = False
@@ -44,9 +50,12 @@ class CityscapesConfig(BaseConfig):
 
         # Augmentation
         self.crop_size = 512
-        self.randscale = [0.0, 0.0]
+        # Albumentations RandomScale uses scale_limit with factor range [1+low, 1+high].
+        # This corresponds to an effective random scale range of [0.125, 1.5].
+        self.randscale = (-0.875, 0.5)
         self.scale = 1.0
-        self.brightness = 0.0
-        self.contrast = 0.0
-        self.saturation = 0.0
-        self.h_flip = 0.0
+        self.brightness = 0.5
+        self.contrast = 0.5
+        self.saturation = 0.5
+        self.h_flip = 0.5
+        self.v_flip = 0.0

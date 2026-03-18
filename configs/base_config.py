@@ -54,6 +54,9 @@ class BaseConfig:
         # Scheduler
         self.lr_policy = 'cos_warmup'
         self.warmup_epochs = 3
+        self.warmup_iters = None
+        self.max_iters = None
+        self.poly_power = 0.9
 
         # Optimizer
         self.optimizer_type = 'sgd'

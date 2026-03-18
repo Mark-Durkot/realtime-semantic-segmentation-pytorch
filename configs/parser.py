@@ -90,10 +90,16 @@ def get_parser():
 
     # Scheduler
     parser.add_argument('--lr_policy', type=str, default=None, 
-        choices = ['cos_warmup', 'linear', 'step'],
+        choices = ['cos_warmup', 'linear', 'step', 'poly'],
         help='choose which learning rate policy you want to use')
     parser.add_argument('--warmup_epochs', type=int, default=None, 
         help='warmup epoch number for `cos_warmup` learning rate policy')
+    parser.add_argument('--warmup_iters', type=int, default=None, 
+        help='warmup iteration number (used by `poly` learning rate policy)')
+    parser.add_argument('--max_iters', type=int, default=None, 
+        help='maximum training iterations (used by iteration-based schedulers like `poly`)')
+    parser.add_argument('--poly_power', type=float, default=None, 
+        help='power factor used by the `poly` learning rate policy')
 
     # Optimizer
     parser.add_argument('--optimizer_type', type=str, default=None, 

@@ -45,11 +45,11 @@ class VDDConfig(BaseConfig):
 
         # Augmentation
         self.crop_size = 512
-        self.randscale = [-0.25, 0.5]
+        self.randscale = [0.125, 1.5], [0.5, 2.5]
         self.scale = 1.0
-        self.brightness = 0.5
-        self.contrast = 0.5
-        self.saturation = 0.5
+        self.brightness = 0.0
+        self.contrast = 0.1
+        self.saturation = 0.1
         self.h_flip = 0.5
         self.v_flip = 0.5
 
