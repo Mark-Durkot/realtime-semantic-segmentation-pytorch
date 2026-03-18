@@ -9,7 +9,8 @@ class CityscapesConfig(BaseConfig):
 
         # Dataset
         self.dataset = 'cityscapes'
-        self.data_root = '/root/.cache/kagglehub/datasets/xiaose/cityscapes/versions/1/Cityspaces'
+        # self.data_root = '/root/.cache/kagglehub/datasets/xiaose/cityscapes/versions/1/Cityspaces'
+        self.data_root = '/kaggle/input/cityscapes/Cityspaces'
         # Keep both attributes for compatibility across datasets/loaders.
         self.dataroot = self.data_root
         self.num_class = 19
