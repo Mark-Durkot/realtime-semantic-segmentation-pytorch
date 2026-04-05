@@ -17,9 +17,9 @@ class OptunaTrainer(SegTrainer):
         self.trial = trial
 
     def validate(self, config, *args, **kwargs):
-        val_score = super().validate(config)
+        val_score, val_loss = super().validate(config, *args, **kwargs)
         self.after_validate(val_score)
-        return val_score
+        return val_score, val_loss
 
     def after_validate(self, val_score):
         self.trial.report(val_score, self.cur_epoch)

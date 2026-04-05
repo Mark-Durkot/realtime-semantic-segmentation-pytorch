@@ -30,21 +30,24 @@ if not os.path.isabs(csv_path):
 
 df = pd.read_csv(csv_path)
 
+loss_col = 'train_loss' if 'train_loss' in df.columns else 'loss'
+miou_col = 'val_mIoU' if 'val_mIoU' in df.columns else 'mIoU'
+
 # Plot Loss vs Epoch
 plt.figure(figsize=(12, 5))
 plt.suptitle(args.dataset_name, fontsize=14, fontweight='bold')
 
 plt.subplot(1, 2, 1)
-plt.plot(df['epoch'], df['loss'], color='b')
-plt.title('Loss vs Epoch')
+plt.plot(df['epoch'], df[loss_col], color='b')
+plt.title('Train loss vs Epoch')
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.grid(True)
 
 # Plot mIoU vs Epoch
 plt.subplot(1, 2, 2)
-plt.plot(df['epoch'], df['mIoU'], color='g')
-plt.title('mIoU vs Epoch')
+plt.plot(df['epoch'], df[miou_col], color='g')
+plt.title('Val mIoU vs Epoch')
 plt.xlabel('Epoch')
 plt.ylabel('mIoU')
 plt.grid(True)

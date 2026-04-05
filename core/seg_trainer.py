@@ -150,12 +150,21 @@ class SegTrainer(BaseTrainer):
 
     @torch.no_grad()
     def validate(self, config, val_best=False):
+        val_loss_sum = 0.0
+        val_loss_count = 0
+
         pbar = tqdm(self.val_loader) if self.main_rank else self.val_loader
         for (images, masks) in pbar:
             images = images.to(self.device, dtype=torch.float32)
             masks = masks.to(self.device, dtype=torch.long)
 
-            preds = self.ema_model.ema(images)
+            with amp.autocast(enabled=config.amp_training):
+                preds = self.ema_model.ema(images)
+                batch_loss = self.loss_fn(preds, masks)
+
+            val_loss_sum += batch_loss.detach().item()
+            val_loss_count += 1
+
             self.metrics.update(preds.detach(), masks)
 
             if self.main_rank:
@@ -163,21 +172,26 @@ class SegTrainer(BaseTrainer):
 
         iou = self.metrics.compute()
         score = iou.mean()  # mIoU
+        avg_val_loss = val_loss_sum / max(val_loss_count, 1)
 
         if self.main_rank:
             if val_best:
                 self.logger.info(f'\n\nTrain {config.total_epoch} epochs finished.' + 
                                  f'\n\nBest mIoU is: {score:.4f}\n')
             else:
-                self.logger.info(f' Epoch{self.cur_epoch} mIoU: {score:.4f}    | ' + 
-                                 f'best mIoU so far: {self.best_score:.4f}\n')
+                self.logger.info(
+                    f' Epoch{self.cur_epoch} val mIoU: {score:.4f}    | '
+                    f'val loss: {avg_val_loss:.4f}    | '
+                    f'best mIoU so far: {self.best_score:.4f}\n'
+                )
 
             if config.use_tb and self.cur_epoch < config.total_epoch:
                 self.writer.add_scalar('val/mIoU', score.cpu(), self.cur_epoch+1)
+                self.writer.add_scalar('val/loss', avg_val_loss, self.cur_epoch+1)
                 for i in range(config.num_class):
                     self.writer.add_scalar(f'val/IoU_cls{i:02f}', iou[i].cpu(), self.cur_epoch+1)
         self.metrics.reset()
-        return score
+        return score, avg_val_loss
 
     @torch.no_grad()
     def predict(self, config):

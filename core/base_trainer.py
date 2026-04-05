@@ -90,7 +90,7 @@ class BaseTrainer:
         if self.main_rank:
             with open(csv_path, 'w', newline='') as f:
                 writer = csv.writer(f)
-                writer.writerow(['epoch', 'loss', 'train_mIoU', 'mIoU'])
+                writer.writerow(['epoch', 'train_loss', 'train_mIoU', 'val_loss', 'val_mIoU'])
 
         # Start training from the latest epoch or from scratch
         start_epoch = self.cur_epoch
@@ -100,8 +100,9 @@ class BaseTrainer:
             avg_loss, train_miou = self.train_one_epoch(config)
 
             val_score = None
+            val_loss = None
             if cur_epoch >= config.begin_val_epoch and cur_epoch % config.val_interval == 0:
-                val_score = self.validate(config)
+                val_score, val_loss = self.validate(config)
 
                 if self.main_rank and val_score > self.best_score:
                     # Save best model
@@ -113,12 +114,14 @@ class BaseTrainer:
             if self.main_rank:
                 with open(csv_path, 'a', newline='') as f:
                     writer = csv.writer(f)
-                    miou_val = f'{val_score:.4f}' if val_score is not None else ''
+                    val_m_str = f'{val_score:.4f}' if val_score is not None else ''
+                    val_l_str = f'{val_loss:.4f}' if val_loss is not None else ''
                     writer.writerow([
                         cur_epoch,
                         f'{avg_loss:.4f}',
                         f'{train_miou:.4f}',
-                        miou_val,
+                        val_l_str,
+                        val_m_str,
                     ])
 
             if self.main_rank and config.save_ckpt:
@@ -222,7 +225,7 @@ class BaseTrainer:
 
         self.ema_model.ema = deepcopy(de_parallel(self.model)).eval()
 
-        val_score = self.validate(config, val_best=True)
+        val_score, _ = self.validate(config, val_best=True)
 
         if self.main_rank:
             self.logger.info(f'Best validation score is {val_score}.\n')
