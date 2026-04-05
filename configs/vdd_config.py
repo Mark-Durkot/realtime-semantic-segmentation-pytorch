@@ -17,7 +17,7 @@ class VDDConfig(BaseConfig):
 
         # Training
         self.total_epoch = 200
-        # self.max_iters = 1000
+        self.max_iters = 160000
         self.base_lr = 1e-3
         self.train_bs = 8
         self.loss_type = 'ohem'
