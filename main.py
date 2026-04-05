@@ -6,7 +6,7 @@ warnings.filterwarnings("ignore")
 
 
 if __name__ == '__main__':
-    config = VDDConfig()
+    config = CityscapesConfig()
 
     config.init_dependent_config()
 

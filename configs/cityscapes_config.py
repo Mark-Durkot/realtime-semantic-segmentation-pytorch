@@ -33,9 +33,9 @@ class CityscapesConfig(BaseConfig):
         self.warmup_epochs = 5
         self.logger_name = 'seg_trainer'
         self.use_aux = False
-        self.load_ckpt = True
+        self.load_ckpt = False
         self.load_ckpt_path = '/content/drive/MyDrive/Cityscapes/results/save/best.pth'
-        self.resume_training = True
+        self.resume_training = False
         self.save_dir = '/content/drive/MyDrive/Cityscapes/results/save'
 
         # Validating
