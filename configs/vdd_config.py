@@ -45,7 +45,8 @@ class VDDConfig(BaseConfig):
 
         # Augmentation
         self.crop_size = 512
-        self.randscale = [0.125, 1.5], [0.5, 2.5]
+        # RandomScale scale_limit: offsets around 1; (-0.875, 0.5) -> factors in [0.125, 1.5]
+        self.randscale = (-0.875, 0.5)
         self.scale = 1.0
         self.brightness = 0.0
         self.contrast = 0.1
