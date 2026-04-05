@@ -33,7 +33,9 @@ class SegTrainer(BaseTrainer):
     def train_one_epoch(self, config):
         self.model.train()
 
-        sampler_set_epoch(config, self.train_loader, self.cur_epoch) 
+        sampler_set_epoch(config, self.train_loader, self.cur_epoch)
+
+        self.metrics.reset()
 
         pbar = tqdm(self.train_loader) if self.main_rank else self.train_loader
 
@@ -120,6 +122,9 @@ class SegTrainer(BaseTrainer):
             epoch_loss_sum += loss.detach().item()
             epoch_loss_count += 1
 
+            with torch.no_grad():
+                self.metrics.update(preds.detach(), masks)
+
             if self.main_rank:
                 pbar.set_description(('%s'*2) % 
                                 (f'Epoch:{self.cur_epoch}/{config.total_epoch}{" "*4}|',
@@ -127,7 +132,21 @@ class SegTrainer(BaseTrainer):
                                 )
 
         avg_loss = epoch_loss_sum / max(epoch_loss_count, 1)
-        return avg_loss
+        train_iou = self.metrics.compute()
+        train_miou = train_iou.mean()
+        self.metrics.reset()
+
+        if self.main_rank:
+            self.logger.info(
+                f' Epoch{self.cur_epoch} train mIoU: {train_miou:.4f}    | '
+                f'loss: {avg_loss:.4f}\n'
+            )
+            if config.use_tb and self.cur_epoch < config.total_epoch:
+                self.writer.add_scalar('train/mIoU', train_miou.cpu(), self.cur_epoch + 1)
+                for i in range(config.num_class):
+                    self.writer.add_scalar(f'train/IoU_cls{i:02f}', train_iou[i].cpu(), self.cur_epoch + 1)
+
+        return avg_loss, train_miou
 
     @torch.no_grad()
     def validate(self, config, val_best=False):
