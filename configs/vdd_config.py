@@ -17,6 +17,7 @@ class VDDConfig(BaseConfig):
 
         # Training
         self.total_epoch = 150
+        self.max_iters = 1000
         self.base_lr = 1e-3
         self.train_bs = 8
         self.loss_type = 'ohem'
@@ -46,7 +47,7 @@ class VDDConfig(BaseConfig):
         # Augmentation
         self.crop_size = 512
         # RandomScale scale_limit: offsets around 1; (-0.875, 0.5) -> factors in [0.125, 1.5]
-        self.randscale = (-0.875, 0.5)
+        self.randscale = (0.125, 1.5)
         self.scale = 1.0
         self.brightness = 0.0
         self.contrast = 0.1

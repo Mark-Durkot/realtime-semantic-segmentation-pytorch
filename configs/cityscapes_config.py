@@ -20,7 +20,7 @@ class CityscapesConfig(BaseConfig):
         self.model = 'ppliteseg'
 
         # Training
-        self.total_epoch = 200
+        self.total_epoch = 100
         self.max_iters = 160000
         self.base_lr = 0.005
         self.train_bs = 16
@@ -33,8 +33,9 @@ class CityscapesConfig(BaseConfig):
         self.warmup_epochs = 5
         self.logger_name = 'seg_trainer'
         self.use_aux = False
-        self.load_ckpt = False
-        self.resume_training = False
+        self.load_ckpt = True
+        self.load_ckpt_path = '/content/drive/MyDrive/Cityscapes/results/save/best.pth'
+        self.resume_training = True
         self.save_dir = '/content/drive/MyDrive/Cityscapes/results/save'
 
         # Validating
@@ -52,7 +53,7 @@ class CityscapesConfig(BaseConfig):
         self.crop_size = 512
         # Albumentations RandomScale uses scale_limit with factor range [1+low, 1+high].
         # This corresponds to an effective random scale range of [0.125, 1.5].
-        self.randscale = (-0.875, 0.5)
+        self.randscale = (0.125, 1.5)
         self.scale = 1.0
         self.brightness = 0.5
         self.contrast = 0.5
